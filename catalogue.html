@@ -1,191 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Cake Catalogue</title>
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
-
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #fceff9, #e8fff6, #fff4e7);
-            min-height: 100vh;
-            padding: 40px 20px;
-            color: #4b3d57;
-            animation: fadeIn 1.2s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h2 {
-            text-align: center;
-            font-family: 'Playfair Display', serif;
-            font-size: 34px;
-            margin-bottom: 30px;
-        }
-
-        .summary-box {
-            max-width: 650px;
-            margin: 0 auto 40px;
-            background: rgba(255,255,255,0.4);
-            backdrop-filter: blur(10px);
-            padding: 25px;
-            border-radius: 18px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-            animation: fadeIn 1.3s ease;
-        }
-        .summary-box p { font-size: 17px; }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 25px;
-        }
-
-        .card {
-            background: rgba(255,255,255,0.45);
-            padding: 20px;
-            border-radius: 18px;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-align: center;
-            animation: fadeIn 1.5s ease;
-        }
-
-        .card img {
-            width: 100%;
-            border-radius: 14px;
-            margin-bottom: 15px;
-        }
-
-        button, a.button {
-            display: block;
-            width: 100%;
-            padding: 14px;
-            background: rgba(255,255,255,0.55);
-            border: 2px solid #c0a4ff;
-            color: #4b3d57;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            backdrop-filter: blur(10px);
-            transition: 0.3s ease;
-            margin-top: 10px;
-            cursor:pointer;
-        }
-
-        button:hover, a.button:hover {
-            background: #c0a4ff;
-            color: #fff;
-        }
-
-        .section-title {
-            margin-top: 60px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 30px;
-            font-family: 'Playfair Display', serif;
-        }
-
-    </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Catalogue — Whimsy Cakes</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--text:#3b2f2f}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Quicksand",sans-serif;background:linear-gradient(135deg,#dffaf0,#f0e9ff,#fff0e6);min-height:100vh;padding:28px}
+  .wrap{max-width:1100px;margin:28px auto;padding:20px}
+  .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;gap:12px;flex-wrap:wrap}
+  .brand{font-family:Pacifico;font-size:22px;color:#5a3e6b}
+  .mini{font-size:13px;opacity:.86}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+  .card{border-radius:14px;padding:12px;background:linear-gradient(180deg,rgba(255,255,255,0.65),rgba(255,255,255,0.45));backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.6)}
+  .card img{width:100%;height:170px;object-fit:cover;border-radius:10px}
+  .meta{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+  .price{font-weight:800}
+  .btn{padding:10px 12px;border-radius:10px;border:none;cursor:pointer;font-weight:700;background:linear-gradient(90deg,#b7ffd8,#d8c8ff)}
+  .btn.secondary{background:transparent;border:1px solid rgba(0,0,0,0.05)}
+  .summaryBox{margin-top:16px;padding:14px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.5),rgba(255,255,255,0.3));}
+  .section-title{margin-top:36px;margin-bottom:18px;text-align:center;font-size:26px;font-family:Playfair Display, serif;color:#5a3e6b}
+  @media(max-width:720px){.topbar{flex-direction:column;align-items:flex-start}}
+</style>
 </head>
 <body>
-
-<h2>Your Custom Cake Selection</h2>
-
-<div class="summary-box">
-    <p><strong>Weight:</strong> <span id="w"></span></p>
-    <p><strong>Flavour:</strong> <span id="f"></span></p>
-    <p><strong>Message:</strong> <span id="m"></span></p>
-    <p><strong>Price:</strong> ₹<span id="p"></span></p>
-</div>
-
-<!-- CAKE OPTIONS -->
-<h2 style="margin-top:10px;">Cake Options</h2>
-
-<div class="grid" id="cakeGrid">
-    <!-- Cards will be injected dynamically -->
-</div>
-
-<!-- CUPCAKES SECTION -->
-<h2 class="section-title">Cupcakes</h2>
-
-<div class="grid">
-    <div class="card">
-        <img src="https://images.unsplash.com/photo-1607472588073-5e06d64d3ccb?auto=format&fit=crop&w=800&q=80">
-        <h3>Chocolate Cupcake</h3>
-        <p>₹90 each</p>
-        <a href="payment.html" class="button">Order Now</a>
+<div class="wrap">
+  <div class="topbar">
+    <div>
+      <div class="brand">Whimsy Cakes • Catalogue</div>
+      <div class="mini">Curated cake options based on your customization</div>
     </div>
-
-    <div class="card">
-        <img src="https://images.unsplash.com/photo-1519861531473-9200262188bf?auto=format&fit=crop&w=800&q=80">
-        <h3>Vanilla Swirl Cupcake</h3>
-        <p>₹80 each</p>
-        <a href="payment.html" class="button">Order Now</a>
+    <div style="display:flex;gap:8px">
+      <button class="btn secondary" onclick="location.href='quote.html'">Edit Quote</button>
+      <button class="btn" onclick="scrollToCupcakes()">Jump to Cupcakes</button>
     </div>
+  </div>
 
-    <div class="card">
-        <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=800&q=80">
-        <h3>Red Velvet Cupcake</h3>
-        <p>₹100 each</p>
-        <a href="payment.html" class="button">Order Now</a>
+  <div id="catalogueGrid" class="grid" aria-live="polite"></div>
+
+  <div id="orderSummary" class="summaryBox" style="display:none;margin-top:20px">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <div style="font-size:13px;opacity:.85">Selected</div>
+        <div id="selTitle" style="font-weight:800"></div>
+        <div id="selDetails" style="opacity:.85;font-size:13px"></div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:13px;opacity:.85">Total</div>
+        <div id="selPrice" style="font-weight:900;font-size:20px"></div>
+        <div style="margin-top:8px"><button class="btn" id="toPayment">Proceed to Payment</button></div>
+      </div>
     </div>
+  </div>
+
+  <h2 class="section-title" id="cupcakesTitle">Cupcakes</h2>
+
+  <div class="grid" id="cupcakeGrid">
+    <!-- Cupcake cards inserted by JS -->
+  </div>
 </div>
-
-<br><br>
 
 <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    let weight = urlParams.get("weight");
-    let flavour = urlParams.get("flavour");
-    let message = urlParams.get("message");
+  // Base prices
+  const base = { "1":600,"2":1100,"3":1600 };
 
-    document.getElementById("w").textContent = weight;
-    document.getElementById("f").textContent = flavour;
-    document.getElementById("m").textContent = message;
+  // Reliable cake images from Unsplash (explicit cake photos)
+  // Each flavour has multiple cake photos (clear cake images)
+  const cakeImages = {
+    "Chocolate": [
+      "https://images.unsplash.com/photo-1542826438-8b0d5b1f7f2f?auto=format&fit=crop&w=1200&q=80", /* chocolate layer cake */
+      "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=80"  /* chocolate slice */
+    ],
+    "Vanilla": [
+      "https://images.unsplash.com/photo-1545022076-0b6b1b4a5f47?auto=format&fit=crop&w=1200&q=80", /* simple vanilla cake */
+      "https://images.unsplash.com/photo-1542528180-4b0822e9b16f?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "Red Velvet": [
+      "https://images.unsplash.com/photo-1606312619070-d48a47a7a52c?auto=format&fit=crop&w=1200&q=80", /* red velvet cake */
+      "https://images.unsplash.com/photo-1542444459-db9b5c9b11a8?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "Strawberry": [
+      "https://images.unsplash.com/photo-1522120695950-2f6c2a6a2fdd?auto=format&fit=crop&w=1200&q=80", /* strawberry cake */
+      "https://images.unsplash.com/photo-1505250469679-203ad9ced0cb?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "Butterscotch": [
+      "https://images.unsplash.com/photo-1606756796496-a4bb9d3a9a2f?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1599785209790-81b3a268f3dc?auto=format&fit=crop&w=1200&q=80"
+    ]
+  };
 
-    let priceList = { "1kg": 600, "2kg": 1100, "3kg": 1600 };
-    document.getElementById("p").textContent = priceList[weight];
+  // Cupcake images (clear cupcake photos)
+  const cupcakes = [
+    { img: "https://images.unsplash.com/photo-1607472588073-5e06d64d3ccb?auto=format&fit=crop&w=1200&q=80", name:"Chocolate Cupcake", price:90 },
+    { img: "https://images.unsplash.com/photo-1519861531473-9200262188bf?auto=format&fit=crop&w=1200&q=80", name:"Vanilla Swirl Cupcake", price:80 },
+    { img: "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80", name:"Red Velvet Cupcake", price:100 },
+    { img: "https://images.unsplash.com/photo-1562440499-64d3a6b6a8a7?auto=format&fit=crop&w=1200&q=80", name:"Strawberry Cupcake", price:95 }
+  ];
 
-    // Cake Images (based on flavour)
-    const cakeImages = {
-        "Chocolate": [
-            "https://images.unsplash.com/photo-1559622214-3df2b5f8f056?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1599785209790-81b3a268f3dc?auto=format&fit=crop&w=800&q=80"
-        ],
-        "Vanilla": [
-            "https://images.unsplash.com/photo-1606312619070-d48a47a7a52c?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1605472155022-0bfe0fae49bf?auto=format&fit=crop&w=800&q=80"
-        ],
-        "Red Velvet": [
-            "https://images.unsplash.com/photo-1606112219348-204d7d8b94ee?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1609457291908-318e7f4d79a5?auto=format&fit=crop&w=800&q=80"
-        ],
-        "Butterscotch": [
-            "https://images.unsplash.com/photo-1633931649656-ec75905b8d65?auto=format&fit=crop&w=800&q=80",
-            "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=800&q=80"
-        ]
+  // Load quote from localStorage (fallback sensible default)
+  let q = localStorage.getItem('whimsy_quote');
+  let quote = q ? JSON.parse(q) : { weight: "1", flavour: "Chocolate", message: "", filling: "Buttercream", style: "Minimal Pastel", extras: {} };
+
+  // Ensure flavour key exists
+  if(!quote.flavour || !cakeImages[quote.flavour]) quote.flavour = Object.keys(cakeImages)[0];
+
+  // Build catalogue cards (one card per weight tier, using selected flavour images)
+  const grid = document.getElementById('catalogueGrid');
+  const weights = ["1","2","3"];
+  weights.forEach((w, idx) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    const img = cakeImages[quote.flavour][idx % cakeImages[quote.flavour].length];
+    const priceBase = base[w];
+    card.innerHTML = `
+      <img src="${img}" alt="${quote.flavour} cake ${w}kg" loading="lazy">
+      <div style="margin-top:8px;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-weight:800">${w} kg • ${quote.flavour}</div>
+          <div style="font-size:13px;opacity:.86">${quote.style} • ${quote.filling}</div>
+        </div>
+        <div style="text-align:right">
+          <div class="price">₹${priceBase}</div>
+          <div style="font-size:12px;opacity:.8">Est.</div>
+        </div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end">
+        <button class="btn" onclick="selectProduct('${w}')">Select</button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  // Cupcake section
+  const cupcakeGrid = document.getElementById('cupcakeGrid');
+  cupcakes.forEach(c => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <img src="${c.img}" alt="${c.name}" loading="lazy">
+      <div style="margin-top:8px">
+        <div style="font-weight:800">${c.name}</div>
+        <div style="font-size:13px;opacity:.86">₹${c.price} each</div>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <button class="btn" onclick='orderCupcake(${c.price},"${c.name.replace(/"/g,"'")}")'>Order</button>
+          <button class="btn secondary" onclick='addToCartCupcake(${c.price},"${c.name.replace(/"/g,"'")}")'>Add</button>
+        </div>
+      </div>
+    `;
+    cupcakeGrid.appendChild(card);
+  });
+
+  function computeExtras() {
+    const ex = quote.extras || {};
+    let e = 0;
+    if(ex.flowers) e += 250;
+    if(ex.topper) e += 350;
+    if(ex.rush) e += 500;
+    if(ex.cupcakes) e += 400;
+    return e;
+  }
+
+  function selectProduct(weight){
+    const price = base[weight] + computeExtras();
+    const order = {
+      weight, flavour: quote.flavour, filling: quote.filling, style: quote.style, message: quote.message, extras: quote.extras || {},
+      price
     };
+    localStorage.setItem('whimsy_order', JSON.stringify(order));
+    // show summary
+    document.getElementById('orderSummary').style.display = 'block';
+    document.getElementById('selTitle').textContent = `${weight} kg • ${quote.flavour}`;
+    const extrasList = [];
+    if(order.extras.flowers) extrasList.push('Fresh Flowers');
+    if(order.extras.topper) extrasList.push('Custom Topper');
+    if(order.extras.rush) extrasList.push('Rush');
+    if(order.extras.cupcakes) extrasList.push('Cupcake Box');
+    document.getElementById('selDetails').textContent = (extrasList.length?extrasList.join(', '):'No extras') + (order.message?(' • "'+order.message+'"'):'');
+    document.getElementById('selPrice').textContent = '₹' + price;
+    window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});
+  }
 
-    const cakeGrid = document.getElementById("cakeGrid");
-    cakeImages[flavour].forEach(img => {
-        cakeGrid.innerHTML += `
-            <div class="card">
-                <img src="${img}">
-                <h3>${flavour} Cake</h3>
-                <p>${weight} • ₹${priceList[weight]}</p>
-                <a href="payment.html" class="button">Order This Cake</a>
-            </div>
-        `;
-    });
+  function orderCupcake(price, name){
+    // create a simple order object for a cupcake single item
+    const order = { type: 'cupcake', item: name, qty: 1, price };
+    localStorage.setItem('whimsy_order', JSON.stringify(order));
+    // go straight to payment
+    window.location.href = 'payment.html';
+  }
+
+  function addToCartCupcake(price, name){
+    // store cupcakes in a simple cart array in localStorage
+    const cart = JSON.parse(localStorage.getItem('whimsy_cart') || '[]');
+    cart.push({ item: name, price, qty: 1 });
+    localStorage.setItem('whimsy_cart', JSON.stringify(cart));
+    alert(`${name} added to cart`);
+  }
+
+  document.getElementById('toPayment')?.addEventListener('click', ()=> window.location.href = 'payment.html');
+
+  function scrollToCupcakes(){
+    document.getElementById('cupcakesTitle').scrollIntoView({behavior:'smooth'});
+  }
 </script>
-
 </body>
 </html>
