@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Get a Quote — Whimsy Cakes</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg1:#dffaf0;--text:#3b2f2f;--glass:rgba(255,255,255,0.6);--accent:#7b6bff}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Quicksand",sans-serif;background:linear-gradient(135deg,#dffaf0,#f0e9ff,#fff0e6);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
+  .card{width:100%;max-width:900px;border-radius:14px;padding:22px;background:linear-gradient(180deg,rgba(255,255,255,0.55),rgba(255,255,255,0.35));backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.6);box-shadow:0 10px 30px rgba(19,16,40,0.06)}
+  h2{font-family:"Pacifico";margin:0 0 10px;font-size:32px;color:#5a3e6b}
+  form{display:grid;grid-template-columns:1fr 320px;gap:18px}
+  .left{display:flex;flex-direction:column;gap:10px}
+  label{font-weight:700;font-size:13px}
+  select,input,textarea{padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);background:transparent}
+  .extras{display:flex;gap:10px;flex-wrap:wrap}
+  .glass-btn{padding:10px 14px;border-radius:12px;background:linear-gradient(90deg,rgba(255,255,255,0.55),rgba(255,255,255,0.35));border:1px solid rgba(255,255,255,0.6);cursor:pointer;font-weight:700}
+  .summary{padding:14px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.45),rgba(255,255,255,0.25));}
+  .total{font-size:20px;font-weight:800;color:#3b2f2f}
+  .actions{display:flex;gap:10px;margin-top:12px}
+  .btn{cursor:pointer;padding:12px 14px;border-radius:12px;border:none;font-weight:700}
+  .btn-primary{background:linear-gradient(90deg,#b7ffd8,#d8c8ff);color:#241a35}
+  .btn-ghost{background:transparent;border:1px solid rgba(0,0,0,0.04)}
+  @media(max-width:880px){form{grid-template-columns:1fr} .summary{order:2}}
+</style>
+</head>
+<body>
+  <div class="card">
+    <h2>Let's fine-tune your cake ✨</h2>
+    <p style="margin:6px 0 18px;opacity:0.85">Add details so we can present the perfect catalogue and prices.</p>
+    <form id="quoteForm">
+      <div class="left">
+        <label>Weight</label>
+        <select id="weight" required>
+          <option value="1">1 kg</option>
+          <option value="2">2 kg</option>
+          <option value="3">3 kg</option>
+        </select>
+
+        <label>Flavour</label>
+        <select id="flavour" required>
+          <option>Chocolate</option>
+          <option>Vanilla</option>
+          <option>Red Velvet</option>
+          <option>Strawberry</option>
+        </select>
+
+        <label>Filling (optional)</label>
+        <select id="filling">
+          <option>Buttercream</option>
+          <option>Fresh Fruit</option>
+          <option>Chocolate Ganache</option>
+          <option>Custard</option>
+        </select>
+
+        <label>Decoration style</label>
+        <select id="style">
+          <option>Minimal Pastel</option>
+          <option>Floral</option>
+          <option>Character Art</option>
+          <option>Chocolate Drip</option>
+        </select>
+
+        <label>Message on cake</label>
+        <input id="message" placeholder="e.g. Happy Birthday, Mira!" />
+
+        <label>Add extras</label>
+        <div class="extras">
+          <label class="glass-btn"><input type="checkbox" id="extra-flowers" /> Fresh Flowers (+₹250)</label>
+          <label class="glass-btn"><input type="checkbox" id="extra-topper" /> Custom Topper (+₹350)</label>
+          <label class="glass-btn"><input type="checkbox" id="extra-rush" /> Rush Order (+₹500)</label>
+          <label class="glass-btn"><input type="checkbox" id="extra-cupcakes" /> Cupcake Box (+₹400)</label>
+        </div>
+
+        <div style="margin-top:14px;display:flex;gap:10px" class="actions">
+          <button type="button" class="btn btn-ghost" id="backHome">Back</button>
+          <button type="button" class="btn btn-primary" id="toCatalogue">View Catalogue & Prices</button>
+        </div>
+      </div>
+
+      <aside class="summary">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div style="font-size:13px;opacity:0.8">Order Summary</div>
+            <div style="font-weight:800;font-size:18px" id="summTitle">1 kg • Chocolate</div>
+            <div style="opacity:0.85;font-size:13px" id="summMessage">Message: —</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:12px;opacity:0.8">Est. Price</div>
+            <div class="total" id="estPrice">₹600</div>
+            <div style="font-size:12px;opacity:0.7;margin-top:6px">20% off applied on first order (if eligible)</div>
+          </div>
+        </div>
+      </aside>
+    </form>
+  </div>
+
+<script>
+  // base prices
+  const base = { "1":600,"2":1100,"3":1600 };
+  function updateSummary(){
+    const w = document.getElementById('weight').value;
+    const f = document.getElementById('flavour').value;
+    const m = document.getElementById('message').value || '—';
+    document.getElementById('summTitle').textContent = w + ' kg • ' + f;
+    document.getElementById('summMessage').textContent = 'Message: ' + m;
+    // extras
+    let extras = 0;
+    if(document.getElementById('extra-flowers').checked) extras += 250;
+    if(document.getElementById('extra-topper').checked) extras += 350;
+    if(document.getElementById('extra-rush').checked) extras += 500;
+    if(document.getElementById('extra-cupcakes').checked) extras += 400;
+    // promo first order - we'll mark in payment page if eligible
+    let price = base[w] + extras;
+    document.getElementById('estPrice').textContent = '₹' + price;
+  }
+
+  // wire events
+  ['weight','flavour','message','extra-flowers','extra-topper','extra-rush','extra-cupcakes'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.addEventListener('input', updateSummary);
+  });
+  updateSummary();
+
+  // Navigation
+  document.getElementById('backHome').addEventListener('click', ()=>location.href='index.html');
+
+  document.getElementById('toCatalogue').addEventListener('click', ()=>{
+    const data = {
+      weight: document.getElementById('weight').value,
+      flavour: document.getElementById('flavour').value,
+      filling: document.getElementById('filling').value,
+      style: document.getElementById('style').value,
+      message: document.getElementById('message').value || '',
+      extras: {
+        flowers: document.getElementById('extra-flowers').checked,
+        topper: document.getElementById('extra-topper').checked,
+        rush: document.getElementById('extra-rush').checked,
+        cupcakes: document.getElementById('extra-cupcakes').checked
+      }
+    };
+    localStorage.setItem('whimsy_quote', JSON.stringify(data));
+    window.location.href = 'catalogue.html';
+  });
+
+  // Restore quick selection if present
+  window.addEventListener('load', ()=>{
+    const q = localStorage.getItem('whimsy_quote');
+    if(q){
+      try{
+        const obj = JSON.parse(q);
+        if(obj.weight) document.getElementById('weight').value = obj.weight;
+        if(obj.flavour) document.getElementById('flavour').value = obj.flavour;
+        if(obj.message) document.getElementById('message').value = obj.message;
+        if(obj.extras){
+          document.getElementById('extra-flowers').checked = obj.extras.flowers || false;
+          document.getElementById('extra-topper').checked = obj.extras.topper || false;
+          document.getElementById('extra-rush').checked = obj.extras.rush || false;
+          document.getElementById('extra-cupcakes').checked = obj.extras.cupcakes || false;
+        }
+        updateSummary();
+      }catch(e){}
+    }
+  });
+</script>
+</body>
+</html>
