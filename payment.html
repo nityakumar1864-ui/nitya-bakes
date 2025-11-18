@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Payment — Whimsy Cakes</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Quicksand",sans-serif;background:linear-gradient(135deg,#dffaf0,#f0e9ff,#fff0e6);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:26px;color:#3b2f2f}
+  .wrap{max-width:980px;width:100%;display:grid;grid-template-columns:1fr 380px;gap:18px}
+  .card{padding:20px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.6),rgba(255,255,255,0.35));backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.6)}
+  h3{font-family:Pacifico;margin:0 0 10px;color:#5a3e6b}
+  label{display:block;margin-top:10px;font-weight:700;font-size:13px}
+  input{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);margin-top:8px}
+  .pay-btn{margin-top:16px;padding:12px;border-radius:12px;border:none;background:linear-gradient(90deg,#b7ffd8,#d8c8ff);font-weight:800;cursor:pointer}
+  .small{font-size:13px;opacity:.85}
+  .summary h4{margin:6px 0}
+  .total{font-size:22px;font-weight:900}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h3>Payment Details</h3>
+      <div class="small">Secure checkout — we never store card details</div>
+
+      <div style="margin-top:12px">
+        <label>Full name</label>
+        <input id="name" placeholder="Your full name" />
+        <label>Phone</label>
+        <input id="phone" placeholder="+91 98xxxx" />
+        <label>Card number</label>
+        <input id="card" placeholder="4242 4242 4242 4242" />
+        <div style="display:flex;gap:8px">
+          <div style="flex:1">
+            <label>Expiry</label><input id="exp" placeholder="MM/YY" />
+          </div>
+          <div style="width:120px">
+            <label>CVV</label><input id="cvv" placeholder="XXX" />
+          </div>
+        </div>
+
+        <button class="pay-btn" id="payNow">Pay Now</button>
+      </div>
+    </div>
+
+    <aside class="card summary">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-size:13px;opacity:.9">Order Summary</div>
+          <h4 id="titleShort">—</h4>
+          <div id="detailsSmall" style="opacity:.85;font-size:13px"></div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:12px;opacity:.8">Subtotal</div>
+          <div id="subtotal" style="font-weight:800">₹0</div>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;display:flex;justify-content:space-between">
+        <div class="small">Promo / Discounts</div>
+        <div id="promoVal" class="small">—</div>
+      </div>
+
+      <div style="margin-top:8px;display:flex;justify-content:space-between;align-items:center">
+        <div style="font-weight:700">Total</div>
+        <div class="total" id="totalVal">₹0</div>
+      </div>
+
+      <div style="margin-top:12px;font-size:12px;opacity:.8">By clicking Pay Now you agree to our <a href="#" style="color:#4d3bd6;text-decoration:none">terms</a>.</div>
+    </aside>
+  </div>
+
+<script>
+  // load order
+  const ord = JSON.parse(localStorage.getItem('whimsy_order') || '{}');
+  if(!ord || !ord.price){ alert('No order found. Redirecting to catalogue.'); window.location.href='catalogue.html'; }
+
+  // promo logic: first order => 20% off
+  // We'll check localStorage flag 'whimsy_first_order_done'. If not present, user eligible.
+  const isFirst = !localStorage.getItem('whimsy_first_order_done');
+  const promoText = isFirst ? '20% first order' : '—';
+  const subtotal = ord.price;
+  const discount = isFirst ? Math.round(subtotal * 0.20) : 0;
+  const total = subtotal - discount;
+
+  // populate
+  document.getElementById('titleShort').textContent = `${ord.weight} kg • ${ord.flavour}`;
+  const extras = [];
+  if(ord.extras && ord.extras.flowers) extras.push('Fresh Flowers');
+  if(ord.extras && ord.extras.topper) extras.push('Custom Topper');
+  if(ord.extras && ord.extras.rush) extras.push('Rush Order');
+  if(ord.extras && ord.extras.cupcakes) extras.push('Cupcake Box');
+  document.getElementById('detailsSmall').textContent = (extras.length?extras.join(', '):'No extras') + (ord.message?(' • "'+ord.message+'"'):'');
+  document.getElementById('subtotal').textContent = '₹' + subtotal;
+  document.getElementById('promoVal').textContent = (discount?('-₹'+discount + ' ('+promoText+')') : promoText);
+  document.getElementById('totalVal').textContent = '₹' + total;
+
+  document.getElementById('payNow').addEventListener('click', ()=>{
+    // basic validation
+    const name = document.getElementById('name').value.trim();
+    if(!name){ alert('Please enter your name'); return; }
+    // simulate payment success -> mark first order done if applicable
+    if(isFirst) localStorage.setItem('whimsy_first_order_done','1');
+    // store order confirmation data
+    const confirmation = {
+      id: 'W' + Date.now().toString().slice(-6),
+      name, phone: document.getElementById('phone').value, total, order: ord
+    };
+    localStorage.setItem('whimsy_confirmation', JSON.stringify(confirmation));
+    // redirect to thank you
+    window.location.href = 'thankyou.html';
+  });
+</script>
+</body>
+</html>
