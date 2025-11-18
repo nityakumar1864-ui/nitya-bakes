@@ -1,192 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-P72PCNX4TJ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Whimsy Cakes — Sweet by Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --mint:#dffaf0;
+    --lavender:#f0e9ff;
+    --peach:#fff0e6;
+    --glass-bg: rgba(255,255,255,0.55);
+    --accent:#7b6bff;
+    --text:#3b2f2f;
+    --glass-border: rgba(255,255,255,0.6);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:"Quicksand",system-ui,Segoe UI,Roboto,-apple-system;
+    color:var(--text);
+    background: linear-gradient(135deg,var(--mint),var(--lavender),var(--peach));
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+  header{
+    position:sticky;top:0;backdrop-filter: blur(6px);
+    background: linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,255,255,0.20));
+    border-bottom: 1px solid var(--glass-border);
+    padding:14px 28px; display:flex;align-items:center;justify-content:space-between;z-index:5;
+  }
+  .logo{display:flex;align-items:center;gap:12px}
+  .logo .mark{
+    width:46px;height:46px;border-radius:10px;
+    background: linear-gradient(135deg,#c9f7e9,#e7defc);
+    box-shadow: 0 6px 18px rgba(123,107,255,0.12), inset 0 -4px 10px rgba(255,255,255,0.5);
+    display:flex;align-items:center;justify-content:center;font-family:"Pacifico";color:var(--accent);
+    font-weight:700;font-size:20px;
+  }
+  nav a{margin-left:18px;text-decoration:none;color:var(--text);font-weight:600}
+  .container{max-width:1200px;margin:30px auto;padding:0 20px;width:100%}
+  .hero{
+    display:grid;grid-template-columns:1fr 460px;gap:28px;align-items:center;
+    margin-top:18px;
+  }
 
-  gtag('config', 'G-P72PCNX4TJ', { 'debug_mode':true });
-</script>
-    <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-PDKCKK28');</script>
-<!-- End Google Tag Manager -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nitya Bakes | Patisserie</title>
-    <style>
-        body
-        {
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-            background: #fff8f2;
-            color: #5a3e36;
-        }
+  /* Hero left */
+  .hero-left{
+    padding:28px;border-radius:16px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.45), rgba(255,255,255,0.25));
+    box-shadow: 0 8px 30px rgba(22,18,40,0.06);
+    backdrop-filter: blur(8px);
+    animation: fadeInUp .9s ease both;
+  }
+  h1{font-family:"Pacifico";font-size:44px;margin:6px 0;color:#5a3e6b}
+  p.lead{margin:6px 0 18px;font-size:16px;opacity:0.95}
+  .badges{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+  .badge{
+    padding:8px 12px;border-radius:12px;background:rgba(255,255,255,0.7);
+    border:1px solid var(--glass-border);font-weight:600;font-size:13px;
+  }
 
-        header {
-            background: #f7d6c6;
-            padding: 20px;
-            text-align: center;
-        }
+  /* hero right (feature card) */
+  .hero-right{
+    border-radius:16px;padding:20px;background:linear-gradient(180deg, rgba(255,255,255,0.45), rgba(255,255,255,0.20));
+    box-shadow:0 8px 30px rgba(22,18,40,0.06);backdrop-filter:blur(6px);
+    display:flex;flex-direction:column;gap:12px;align-items:stretch;animation: fadeIn .9s .15s both;
+  }
+  .price-pill{font-weight:700;color:#fff;background:linear-gradient(90deg,#8bd6c9,#c2b1ff);padding:8px 12px;border-radius:999px;align-self:start}
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+  .btn{
+    padding:12px 18px;border-radius:12px;border:1px solid rgba(255,255,255,0.6);
+    background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));
+    box-shadow: 0 6px 18px rgba(123,107,255,0.08);
+    cursor:pointer;font-weight:700;text-decoration:none;color:var(--text);
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .btn:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(123,107,255,0.12)}
+  .btn-primary{background:linear-gradient(90deg,#b7ffd8,#d8c8ff);border:none;color:#2b1f3a}
+  .btn-ghost{background:transparent;border:1px solid rgba(59,47,47,0.06)}
 
-        header h1 {
-            margin: 0;
-            font-size: 2.5rem;
-            letter-spacing: 2px;
-        }
+  /* features grid */
+  .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:26px}
+  .card{
+    border-radius:14px;padding:18px;background:rgba(255,255,255,0.5);backdrop-filter: blur(6px);
+    border:1px solid var(--glass-border);box-shadow:0 8px 20px rgba(12,8,30,0.04);
+  }
+  .card h4{margin:6px 0 8px;font-size:18px}
+  .card p{margin:0;opacity:0.9;font-size:14px}
 
-        nav {
-            text-align: center;
-            background: #f0b9a1;
-            padding: 10px 0;
-        }
+  footer{margin-top:34px;padding:22px;text-align:center;opacity:0.9}
 
-        nav a {
-            margin: 0 15px;
-            text-decoration: none;
-            color: #5a3e36;
-            font-weight: bold;
-        }
+  /* small screen */
+  @media(max-width:880px){
+    .hero{grid-template-columns:1fr; padding-bottom:10px}
+    h1{font-size:36px}
+  }
 
-        .hero {
-            background: url('https://images.unsplash.com/photo-1542826438-1b8a9c5cc8bb') center/cover no-repeat;
-            height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            text-shadow: 2px 2px 6px #000;
-        }
-
-        .hero h2 {
-            font-size: 2.5rem;
-        }
-
-        .section {
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        .items {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            flex-wrap: wrap;
-        }
-
-        .card {
-            background: #ffffff;
-            padding: 15px;
-            width: 250px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .card img {
-            width: 100%;
-            border-radius: 10px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 15px;
-            background: #f0b9a1;
-            margin-top: 20px;
-        }
-    </style>
+  @keyframes fadeInUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+</style>
 </head>
 <body>
-    <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PDKCKK28"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
 <header>
-    <h1>Nitya Bakes</h1>
-    <p>Fresh • Handmade • Delicious</p>
+  <div class="logo">
+    <div class="mark">W</div>
+    <div>
+      <div style="font-weight:800">Whimsy Cakes</div>
+      <div style="font-size:12px;opacity:0.8">Mint • Lavender • Peach</div>
+    </div>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="catalogue.html">Catalogue</a>
+    <a href="quote.html">Get Quote</a>
+  </nav>
 </header>
 
-<nav>
-    <a href="#cakes">Cakes</a>
-    <a href="#cupcakes">Cupcakes</a>
-    <a href="#croissants">Croissants</a>
-    <a href="#contact">Contact</a>
-</nav>
+<main class="container">
+  <section class="hero">
+    <div class="hero-left">
+      <h1>Sweet moments, made whimsically.</h1>
+      <p class="lead">Bespoke cakes & cupcakes crafted with natural ingredients, no artificial flavouring — fully customizable. Soft pastel designs for every celebration.</p>
 
-<div class="hero">
-    <h2>Welcome to Nitya’s Patisserie</h2>
-</div>
+      <div class="badges">
+        <div class="badge">20% off — First Order</div>
+        <div class="badge">Free delivery — First 3 orders</div>
+        <div class="badge">Made with natural ingredients</div>
+      </div>
 
-<!-- Cakes Section -->
-<section class="section" id="cakes">
-    <h2>Our Cakes</h2>
-    <div class="items">
+      <div class="features" style="margin-top:20px">
         <div class="card">
-            <img src="https://images.unsplash.com/photo-1608198093002-ad4e005484f9" alt="Cake">
-            <h3>Chocolate Cake</h3>
-            <p>Rich, moist & decadent.</p>
+          <h4>Handmade, Natural</h4>
+          <p>Only fresh dairy, real fruit purées and natural extracts — no artificial flavours.</p>
         </div>
-
         <div class="card">
-            <img src="https://images.unsplash.com/photo-1499028344343-cd173ffc68a9" alt="Cake">
-            <h3>Vanilla Berry Cake</h3>
-            <p>Soft layers with fresh berries.</p>
+          <h4>Fully Customizable</h4>
+          <p>Sizes, layers, messages and design — tell us your dream and we’ll bake it.</p>
         </div>
+        <div class="card">
+          <h4>Cupcakes & Minis</h4>
+          <p>Small celebrations? Try our mini cupcake boxes with pastel frosting swirls.</p>
+        </div>
+      </div>
     </div>
-</section>
 
-<!-- Cupcakes Section -->
-<section class="section" id="cupcakes">
-    <h2>Cupcakes</h2>
-    <div class="items">
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1599785209707-28f1f56c7c57" alt="Cupcake">
-            <h3>Chocolate Cupcake</h3>
-            <p>Perfect bite-sized treats.</p>
+    <aside class="hero-right" aria-labelledby="cta-title">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-size:13px;opacity:.9">Start your custom order</div>
+          <div style="font-weight:800;font-size:18px">Quick Quote Builder</div>
         </div>
+        <div class="price-pill">Save 20% Today</div>
+      </div>
 
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1519861531473-9200262188bf" alt="Cupcake">
-            <h3>Red Velvet Cupcake</h3>
-            <p>Classic & irresistible.</p>
+      <form id="quick-quote" style="margin-top:8px;display:flex;flex-direction:column;gap:10px">
+        <select id="weight" class="btn" style="padding:11px;border-radius:10px;">
+          <option value="1">1 kg</option>
+          <option value="2">2 kg</option>
+          <option value="3">3 kg</option>
+        </select>
+        <select id="flavour" class="btn" style="padding:11px;border-radius:10px;">
+          <option>Chocolate</option>
+          <option>Vanilla</option>
+          <option>Red Velvet</option>
+          <option>Strawberry</option>
+        </select>
+        <input id="message" class="btn" placeholder="Message on cake (e.g. Happy Bday Maya)" style="padding:11px;border-radius:10px;border:1px solid rgba(0,0,0,0.05)"/>
+        <div class="cta-row">
+          <a class="btn btn-primary" id="goto-quote">Get Full Quote</a>
+          <a class="btn btn-ghost" href="catalogue.html" id="view-products">Browse Catalogue</a>
         </div>
-    </div>
-</section>
+      </form>
 
-<!-- Croissants Section -->
-<section class="section" id="croissants">
-    <h2>Croissants</h2>
-    <div class="items">
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1523986371872-9d3ba2e2f642" alt="Croissant">
-            <h3>Butter Croissant</h3>
-            <p>Flaky, buttery perfection.</p>
-        </div>
+      <small style="opacity:0.8">No payment collected on this step. Final price & order summary will be on the payment page.</small>
+    </aside>
+  </section>
 
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1547127796-06bb04e4b315" alt="Croissant">
-            <h3>Chocolate Croissant</h3>
-            <p>Sweet & flaky delight.</p>
-        </div>
-    </div>
-</section>
+  <footer>
+    © <span id="yr"></span> Whimsy Cakes • Crafted with pastel dreams
+  </footer>
+</main>
 
-<!-- Contact -->
-<section class="section" id="contact">
-    <h2>Contact Us</h2>
-    <p>Email: <strong>nityabakes@example.com</strong></p>
-    <p>Instagram: <strong>@nitya_bakes</strong></p>
-</section>
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
 
-<footer>
-    © 2025 Nitya Bakes – All Rights Reserved
-</footer>
-
+  // Quick quote -> save to localStorage and navigate
+  document.getElementById('goto-quote').addEventListener('click', ()=>{
+    const data = {
+      weight: document.getElementById('weight').value,
+      flavour: document.getElementById('flavour').value,
+      message: document.getElementById('message').value || ''
+    };
+    localStorage.setItem('whimsy_quote', JSON.stringify(data));
+    window.location.href = 'quote.html';
+  });
+</script>
 </body>
 </html>
-
