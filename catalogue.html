@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
+ <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-P72PCNX4TJ"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -11,13 +11,13 @@
   gtag('config', 'G-P72PCNX4TJ');
 </script>
   <!-- 
-  Google Tag Manager -->
+  Google Tag Manager 
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-PDKCKK28');</script>
- <!-- End Google Tag Manager -->
+ End Google Tag Manager -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Catalogue — Whimsy Cakes</title>
@@ -208,7 +208,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const order = { type: 'cupcake', item: name, qty: 1, price };
     localStorage.setItem('whimsy_order', JSON.stringify(order));
     // go straight to payment
-    window.location.href = 'payment.html';
+    window.location.href = 'https://baking8.netlify.app/payment.html';
   }
 
   function addToCartCupcake(price, name){
@@ -219,7 +219,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     alert(`${name} added to cart`);
   }
 
-  document.getElementById('toPayment')?.addEventListener('click', ()=> window.location.href = 'payment.html');
+  document.getElementById('toPayment')?.addEventListener('click', ()=> window.location.href = 'https://baking8.netlify.app/payment.html');
 
   function scrollToCupcakes(){
     document.getElementById('cupcakesTitle').scrollIntoView({behavior:'smooth'});
