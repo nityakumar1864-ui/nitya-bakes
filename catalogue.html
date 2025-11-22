@@ -217,7 +217,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const order = { type: 'cupcake', item: name, qty: 1, price };
     localStorage.setItem('whimsy_order', JSON.stringify(order));
     // go straight to payment
-    window.location.href = 'payment.html';
+    window.location.href = 'https://famous-hummingbird-013595.netlify.app/https://famous-hummingbird-013595.netlify.app/payment.html';
   }
 
   function addToCartCupcake(price, name){
@@ -228,7 +228,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     alert(`${name} added to cart`);
   }
 
-  document.getElementById('toPayment')?.addEventListener('click', ()=> window.location.href = 'payment.html');
+  document.getElementById('toPayment')?.addEventListener('click', ()=> window.location.href = 'https://famous-hummingbird-013595.netlify.app/https://famous-hummingbird-013595.netlify.app/payment.html');
 
   function scrollToCupcakes(){
     document.getElementById('cupcakesTitle').scrollIntoView({behavior:'smooth'});
